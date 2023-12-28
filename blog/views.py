@@ -11,7 +11,6 @@ class BlogCreateView(CreateView):
     success_url = reverse_lazy('blog:list')
 
     def form_valid(self, form):
-        print(type(form))
         if form.is_valid():
             new_note = form.save()
             new_note.slug = slugify(new_note.title)
