@@ -1,38 +1,44 @@
 {% extends "catalog/base.html" %}
 {% block content %}
-    <form method="post" action="" class="form-floating" enctype="multipart/form-data">
-        <div class="row">
-            <div class="col-4 mb-2" style="text-align: center">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Создайте товар</h4>
-                    </div>
-                    <div class="card-body">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
-                            {% if object %}
-                                Сохранить
-                            {% else %}
-                                Опубликовать
-                            {% endif %}
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4 mb-2" style="text-align: center">
-                <div class="card mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Версии товаров</h4>
-                    </div>
-                    <div class="card-body">
-                        {{ formset.management_form }}
-                        {% for form in formset.forms %}
+    {% if user.is_authenticated %}
+        <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-4 mb-2" style="text-align: center">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Создайте товар</h4>
+                        </div>
+                        <div class="card-body">
+                            {% csrf_token %}
                             {{ form.as_p }}
-                        {% endfor %}
+                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
+                                {% if object %}
+                                    Сохранить
+                                {% else %}
+                                    Опубликовать
+                                {% endif %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 mb-2" style="text-align: center">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Версии товаров</h4>
+                        </div>
+                        <div class="card-body">
+                            {{ formset.management_form }}
+                            {% for form in formset.forms %}
+                                {{ form.as_p }}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
+        </form>
+    {% else %}
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Войдите или зарегистрируйтесь, чтобы создать товар</h4>
         </div>
-    </form>
+    {% endif %}
 {% endblock %}

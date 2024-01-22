@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -23,6 +25,7 @@ class Product(models.Model):
     purchase_price = models.FloatField(verbose_name='цена за покупку', **NULLABLE)
     date_of_creation = models.DateField(verbose_name='дата создания', auto_now_add=True)
     last_modified_date = models.DateField(verbose_name='дата последнего изменения', auto_now=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.name} {self.description} {self.purchase_price} '

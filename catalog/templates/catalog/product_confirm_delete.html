@@ -1,24 +1,28 @@
 {% extends "catalog/base.html" %}
 {% block content %}
+    {% if user.is_authenticated %}
+        <div class="col-6" style="text-align: center">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Хотите удалить материал? {{ object.title }}</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" class="form-floating">
+                        {% csrf_token %}
+                        <button type="submit" href="{% url 'blog:list' %}" class="btn btn-danger">
+                            Подтвердить
+                        </button>
+                        <a type="button" href="{% url 'blog:list' %}" class="btn btn-success">
+                            Отменить
+                        </a>
+                    </form>
 
-    <div class="col-6" style="text-align: center">
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">Хотите удалить материал? {{ object.title }}</h4>
-            </div>
-            <div class="card-body">
-                <form method="post" action="" class="form-floating">
-                    {% csrf_token %}
-                    <button type="submit" href="{% url 'blog:list' %}" class="btn btn-danger">
-                        Подтвердить
-                    </button>
-                    <a type="button" href="{% url 'blog:list' %}" class="btn btn-success">
-                        Отменить
-                    </a>
-                </form>
-
+                </div>
             </div>
         </div>
-    </div>
-
+    {% else %}
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Войдите или зарегистрируйтесь, чтобы иметь возможность удалить товар</h4>
+        </div>
+    {% endif %}
 {% endblock %}
